@@ -61,3 +61,4 @@ use App\Http\Controllers\Kalkulator_SegitigaController;
 
 // route untuk kalkulator segitiga
 Route::get('/kalkulator/segitiga', [Kalkulator_SegitigaController::class, 'segitiga']);
+
