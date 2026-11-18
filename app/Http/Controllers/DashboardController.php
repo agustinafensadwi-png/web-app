@@ -8,8 +8,16 @@ class DashboardController extends Controller
 {
     public function home()
     {
-        return view('home');
+       $data['judul']='Laman Home'; 
+       $data['isi']='Lorem ipsum dolor sit amet'; 
+       return view('home',$data);
     }
+
+    public function gallery()
+    { 
+        $data['judul']='Laman Gallery'; 
+        return view('gallery',$data); 
+    }  
 
     public function product()
     {

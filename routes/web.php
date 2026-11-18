@@ -34,6 +34,11 @@ route::get('/produk/detail/{harga}', [DashboardController::class, 'detail']);
 // Halaman About
 route::get('/about', [DashboardController::class, 'about']);
 
+//route ke controller Dashboard 
+Route::get('/dashboard',[DashboardController::class, 'home']);
+
+Route::get('/gallery',[DashboardController::class, 'gallery']);
+
 // route untuk membuka view biodata
 Route::get('/biodata',[Web::class, 'biodata']);
 
