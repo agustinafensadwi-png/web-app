@@ -1,64 +1,77 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Web; 
+use App\Http\Controllers\Web;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\KalkulatorController;
+use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\Kalkulator_SegitigaController;
+use App\Http\Controllers\EmployeController;
+use App\Http\Controllers\AdminController;
 
 // Web Routes
 Route::get('/', function () {
     return "Hallo namaku adalah Laravel, Salam Kenal";
 });
 
-// route baru
+// Route baru
 Route::get('/about', function () {
     // return view('welcome');
-    return "<h2>Ini adalah laman About</h2>"; 
+    return "<h2>Ini adalah laman About</h2>";
 });
 
-// route ke controller web ke fungsi home
-Route::get('/web',[Web::class, 'home']); 
+// Route ke controller web ke fungsi home
+Route::get('/web', [Web::class, 'home']);
 
-// route ke controller web ke fungsi profil
-Route::get('/profil/{nama}',[Web::class, 'profil']); 
-
-use App\Http\Controllers\DashboardController;
+// Route ke controller web ke fungsi profil
+Route::get('/profil/{nama}', [Web::class, 'profil']);
 
 // Halaman Home
-route::get('/home', [DashboardController::class, 'home']);
+Route::get('/home', [DashboardController::class, 'home']);
 
 // Halaman Product
-route::get('/product', [DashboardController::class, 'product']);
+Route::get('/product', [DashboardController::class, 'product']);
 
 // Halaman Detail Produk dengan URL Parameter {harga}
-route::get('/produk/detail/{harga}', [DashboardController::class, 'detail']);
+Route::get('/produk/detail/{harga}', [DashboardController::class, 'detail']);
 
-// Halaman About
-route::get('/about', [DashboardController::class, 'about']);
+// Halaman About (DashboardController)
+Route::get('/about', [DashboardController::class, 'about']);
 
-//route ke controller Dashboard 
-Route::get('/dashboard',[DashboardController::class, 'home']);
+// Route ke controller Dashboard
+Route::get('/dashboard', [DashboardController::class, 'home']);
 
-Route::get('/gallery',[DashboardController::class, 'gallery']);
+Route::get('/gallery', [DashboardController::class, 'gallery']);
 
-// route untuk membuka view biodata
-Route::get('/biodata',[Web::class, 'biodata']);
+// Route untuk membuka view biodata
+Route::get('/biodata', [Web::class, 'biodata']);
 
-// import controller kalkulator
-use App\Http\Controllers\KalkulatorController;
-
-// route ke controller kalkulator
+// Route ke controller kalkulator
 Route::get('/kalkulator', [KalkulatorController::class, 'home']);
 
-// route untuk proses perhitungan
-Route::post('/kalkulator/proses',[KalkulatorController::class, 'proses']);
+// Route untuk proses perhitungan
+Route::post('/kalkulator/proses', [KalkulatorController::class, 'proses']);
 
-use App\Http\Controllers\MahasiswaController;
-
-// route untuk daftar mahasiswa 
-function getMahasiswaRoute() {} // placeholder
+// Route untuk daftar mahasiswa
 Route::get('/daftar/mahasiswa', [MahasiswaController::class, 'index']);
 
-use App\Http\Controllers\Kalkulator_SegitigaController;
-
-// route untuk kalkulator segitiga
+// Route untuk kalkulator segitiga
 Route::get('/kalkulator/segitiga', [Kalkulator_SegitigaController::class, 'segitiga']);
 
+// Route Employe
+Route::get('/employe', [EmployeController::class, 'index']);
+Route::get('/employe/create', [EmployeController::class, 'create']);
+Route::post('/employe/store', [EmployeController::class, 'store']);
+Route::get('/employe/edit/{employe}', [EmployeController::class, 'show']);
+Route::put('/employe/{employe}', [EmployeController::class, 'update']);
+Route::delete('/employe/{employe}',[EmployeController::class, 'destroy']); 
+
+Route::resource('employe',EmployeController::class);
+
+// Route Admin
+Route::get('/admin', [AdminController::class, 'index']);
+Route::get('/admin/create', [AdminController::class, 'create']);
+Route::post('/admin/store', [AdminController::class, 'store']);
+Route::get('/admin/edit/{admin}', [AdminController::class, 'show']);
+Route::put('/admin/{admin}', [AdminController::class, 'update']);
+Route::delete('/admin/{admin}', [AdminController::class, 'destroy']);
