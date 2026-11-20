@@ -74,3 +74,47 @@ class Web extends Controller
         return redirect('/employe');
     }
 }
+
+class CreateUsersTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('users', function (Blueprint $table) {
+            // Primary key id auto-increment
+            $table->id();
+
+            // Field nama tipe varchar(100)
+            $table->string('nama', 100);
+
+            // Field email varchar(100) unik
+            $table->string('email', 100)->unique();
+
+            // Field password tipe varchar(100)
+            $table->string('password', 100);
+
+            // Field foto tipe tinytext
+            $table->tinyText('foto');
+
+            // Field role tipe enum('admin', 'user')
+            $table->enum('role', ['admin', 'user']);
+
+            // Field created_at dan updated_at tipe timestamp
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('users');
+    }
+}

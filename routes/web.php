@@ -8,6 +8,9 @@ use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\Kalkulator_SegitigaController;
 use App\Http\Controllers\EmployeController;
 use App\Http\Controllers\AdminController;
+use Illuminate\Database\Migrations\Migration; 
+use Illuminate\Database\Schema\Blueprint; 
+use Illuminate\Support\Facades\Schema;
 
 // Web Routes
 Route::get('/', function () {
@@ -75,3 +78,4 @@ Route::post('/admin/store', [AdminController::class, 'store']);
 Route::get('/admin/edit/{admin}', [AdminController::class, 'show']);
 Route::put('/admin/{admin}', [AdminController::class, 'update']);
 Route::delete('/admin/{admin}', [AdminController::class, 'destroy']);
+
