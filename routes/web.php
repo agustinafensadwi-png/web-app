@@ -11,6 +11,7 @@ use App\Http\Controllers\AdminController;
 use Illuminate\Database\Migrations\Migration; 
 use Illuminate\Database\Schema\Blueprint; 
 use Illuminate\Support\Facades\Schema;
+use App\Http\Controllers\AuthController; 
 
 // Web Routes
 Route::get('/', function () {
@@ -79,3 +80,8 @@ Route::get('/admin/edit/{admin}', [AdminController::class, 'show']);
 Route::put('/admin/{admin}', [AdminController::class, 'update']);
 Route::delete('/admin/{admin}', [AdminController::class, 'destroy']);
 
+//agar langsung masuk login 
+Route::get('/', function(){ 
+    return view('login'); 
+});
+Route::post('/login',[AuthController::class, 'cek']);
