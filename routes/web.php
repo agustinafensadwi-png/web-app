@@ -8,69 +8,37 @@ use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\Kalkulator_SegitigaController;
 use App\Http\Controllers\EmployeController;
 use App\Http\Controllers\AdminController;
-use Illuminate\Database\Migrations\Migration; 
-use Illuminate\Database\Schema\Blueprint; 
-use Illuminate\Support\Facades\Schema;
-use App\Http\Controllers\AuthController; 
+use App\Http\Controllers\AuthController;
 
-// Web Routes
+// Halaman utama mengarah ke form login
 Route::get('/', function () {
-    return "Hallo namaku adalah Laravel, Salam Kenal";
+    return view('login');
 });
 
-// Route baru
-Route::get('/about', function () {
-    // return view('welcome');
-    return "<h2>Ini adalah laman About</h2>";
+Route::get('/login', function () {
+    return view('login');
+})->name('login');
+
+Route::post('/login', [AuthController::class, 'cek']);
+Route::get('/logout', [AuthController::class, 'logout']);
+
+// Route yang dilindungi middleware islogin
+Route::middleware(['islogin'])->group(function () {
+    Route::get('/home', [DashboardController::class, 'home']);
+    Route::get('/dashboard', [DashboardController::class, 'home']);
+    Route::get('/gallery', [DashboardController::class, 'gallery']);
+    Route::get('/about', [DashboardController::class, 'about']);
+    Route::get('/product', [DashboardController::class, 'product']);
+    Route::get('/produk/detail/{harga}', [DashboardController::class, 'detail']);
+
+    // Route Employe
+    Route::get('/employe', [EmployeController::class, 'index']);
+    Route::get('/employe/create', [EmployeController::class, 'create']);
+    Route::post('/employe/store', [EmployeController::class, 'store']);
+    Route::get('/employe/edit/{employe}', [EmployeController::class, 'show']);
+    Route::put('/employe/{employe}', [EmployeController::class, 'update']);
+    Route::delete('/employe/{employe}', [EmployeController::class, 'destroy']);
 });
-
-// Route ke controller web ke fungsi home
-Route::get('/web', [Web::class, 'home']);
-
-// Route ke controller web ke fungsi profil
-Route::get('/profil/{nama}', [Web::class, 'profil']);
-
-// Halaman Home
-Route::get('/home', [DashboardController::class, 'home']);
-
-// Halaman Product
-Route::get('/product', [DashboardController::class, 'product']);
-
-// Halaman Detail Produk dengan URL Parameter {harga}
-Route::get('/produk/detail/{harga}', [DashboardController::class, 'detail']);
-
-// Halaman About (DashboardController)
-Route::get('/about', [DashboardController::class, 'about']);
-
-// Route ke controller Dashboard
-Route::get('/dashboard', [DashboardController::class, 'home']);
-
-Route::get('/gallery', [DashboardController::class, 'gallery']);
-
-// Route untuk membuka view biodata
-Route::get('/biodata', [Web::class, 'biodata']);
-
-// Route ke controller kalkulator
-Route::get('/kalkulator', [KalkulatorController::class, 'home']);
-
-// Route untuk proses perhitungan
-Route::post('/kalkulator/proses', [KalkulatorController::class, 'proses']);
-
-// Route untuk daftar mahasiswa
-Route::get('/daftar/mahasiswa', [MahasiswaController::class, 'index']);
-
-// Route untuk kalkulator segitiga
-Route::get('/kalkulator/segitiga', [Kalkulator_SegitigaController::class, 'segitiga']);
-
-// Route Employe
-Route::get('/employe', [EmployeController::class, 'index']);
-Route::get('/employe/create', [EmployeController::class, 'create']);
-Route::post('/employe/store', [EmployeController::class, 'store']);
-Route::get('/employe/edit/{employe}', [EmployeController::class, 'show']);
-Route::put('/employe/{employe}', [EmployeController::class, 'update']);
-Route::delete('/employe/{employe}',[EmployeController::class, 'destroy']); 
-
-Route::resource('employe',EmployeController::class);
 
 // Route Admin
 Route::get('/admin', [AdminController::class, 'index']);
@@ -80,8 +48,11 @@ Route::get('/admin/edit/{admin}', [AdminController::class, 'show']);
 Route::put('/admin/{admin}', [AdminController::class, 'update']);
 Route::delete('/admin/{admin}', [AdminController::class, 'destroy']);
 
-//agar langsung masuk login 
-Route::get('/', function(){ 
-    return view('login'); 
-});
-Route::post('/login',[AuthController::class, 'cek']);
+// Route tambahan / latihan lainnya
+Route::get('/web', [Web::class, 'home']);
+Route::get('/profil/{nama}', [Web::class, 'profil']);
+Route::get('/biodata', [Web::class, 'biodata']);
+Route::get('/kalkulator', [KalkulatorController::class, 'home']);
+Route::post('/kalkulator/proses', [KalkulatorController::class, 'proses']);
+Route::get('/daftar/mahasiswa', [MahasiswaController::class, 'index']);
+Route::get('/kalkulator/segitiga', [Kalkulator_SegitigaController::class, 'segitiga']);

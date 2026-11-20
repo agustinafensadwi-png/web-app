@@ -8,31 +8,37 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    // Fungsi untuk login
     public function cek(Request $request)
     {
-        // Mencari data email di tabel users
-        $data = User::where('email', $request->email)->firstOrFail();
+        $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
 
-        // Jika datanya ketemu
-        if ($data) {
-            // Cek apakah password sama
-            if (Hash::check($request->password, $data->password)) {
-                // Simpan session
-                session([
-                    'email' => $request->email,
-                    'logged_in' => true,
-                ]);
+        $data = User::where('email', $request->email)->first();
 
-                // Masuk ke dashboard
-                return redirect('/dashboard');
-            }
+        if ($data && Hash::check($request->password, $data->password)) {
+            $request->session()->regenerate();
 
-            // Kembali ke login jika password salah
-            return redirect('/');
+            session([
+                'user_id' => $data->id,
+                'email' => $data->email,
+                'logged_in' => true,
+            ]);
+
+            return redirect('/dashboard');
         }
 
-        // Kembali ke login jika data tidak ditemukan
-        return redirect('/');
+        return redirect('/login')->withErrors([
+            'email' => 'Email atau password salah.',
+        ])->onlyInput('email');
+    }
+
+    public function logout(Request $request)
+    {
+        $request->session()->flush();
+        $request->session()->regenerate();
+
+        return redirect('/login');
     }
 }

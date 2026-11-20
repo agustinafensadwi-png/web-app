@@ -9,7 +9,7 @@
 <body class="bg-light">
     <div class="container mt-5">
         <h2>About</h2>
-        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.</p>
+        <p class="text-muted">Selamat datang di halaman About. Aplikasi ini merupakan proyek pengembangan web berbasis Laravel yang memuat fitur autentikasi pengguna, navigasi halaman, serta pengelolaan data pegawai.</p>
         <a href="/home" class="btn btn-secondary mt-3">Kembali ke Home</a>
     </div>
 </body>

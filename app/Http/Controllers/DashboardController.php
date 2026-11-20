@@ -8,20 +8,24 @@ class DashboardController extends Controller
 {
     public function home()
     {
-       $data['judul']='Laman Home'; 
-       $data['isi']='Lorem ipsum dolor sit amet'; 
-       return view('home',$data);
+        $data['judul'] = 'Laman Home';
+        $data['isi'] = 'Lorem ipsum dolor sit amet';
+
+        return view('home', $data);
     }
 
     public function gallery()
-    { 
-        $data['judul']='Laman Gallery'; 
-        return view('gallery',$data); 
-    }  
+    {
+        $data['judul'] = 'Laman Gallery';
+
+        return view('gallery', $data);
+    }
 
     public function product()
     {
-        return view('product');
+        $data['judul'] = 'Laman Product';
+
+        return view('product', $data);
     }
 
     public function detail($harga)
@@ -40,6 +44,16 @@ class DashboardController extends Controller
 
     public function about()
     {
-        return view('about');
+        $data['judul'] = 'Laman About';
+
+        return view('about', $data);
+    }
+
+    public function index()
+    {
+        $data['judul'] = 'Laman Dashboard';
+        $data['isi'] = 'Selamat datang di halaman dashboard.';
+
+        return view('dashboard', $data);
     }
 }
